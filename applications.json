@@ -1,0 +1,58 @@
+[
+    {
+        "app_url"      : "http://os.mbed.com/teams/NXP/code/mbed-cloud-connect-example-ethernet/",
+        "version"      :  "1.3.0",
+        "targets"      : [ "K64F", "K66F"],
+        "network"      : "Ethernet",
+        "vendor"       : "NXP",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "http://os.mbed.com/teams/ST/code/example-Ethernet-mbed-Cloud-connect/",
+        "version"      :  "1.3.0",
+        "targets"      : [ "NUCLEO_F429ZI", "NUCLEO_F746ZG","NUCLEO_F767ZI"],
+        "network"      : "Ethernet",
+        "vendor"       : "ST",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "https://os.mbed.com/teams/ublox/code/example-ODINW2-mbed-Cloud-connect",
+        "version"      :  "1.3.0",
+        "targets"      : ["UBLOX_EVK_ODIN_W2"],
+        "network"      : "Wifi",
+        "vendor"       : "Ublox",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "https://os.mbed.com/teams/ST/code/example-DISCO_L475_IOT-mbed-Cloud-connec/",
+        "version"      :  "1.3.0",
+        "targets"      : ["DISCO_L475VG_IOT01A"],
+        "network"      : "Wifi",
+        "vendor"       : "ST",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "https://os.mbed.com/teams/Realtek/code/example-RTL8195AM-mbed-cloud-connect/",
+        "version"      :  "1.3.3",
+        "targets"      : ["REALTEK_RTL8195AM"],
+        "network"      : "Wifi",
+        "vendor"       : "Realtek",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "https://os.mbed.com/teams/Nuvoton/code/NuMaker-mbed-cloud-example-Ethernet/",
+        "version"      :  "1.3.3",
+        "targets"      : ["NUMAKER_PFM_NUC472","NUMAKER_PFM_M487"],
+        "network"      : "Ethernet",
+        "vendor"       : "Nuvoton",
+        "features"     : ["Connect"]
+    },
+    {
+        "app_url"      : "https://os.mbed.com/teams/Renesas/code/mbed-cloud-example_GR-LYCHEE/",
+        "version"      :  "1.3.3",
+        "targets"      : ["GR_LYCHEE"],
+        "network"      : "Wifi",
+        "vendor"       : "Renesas",
+        "features"     : ["Connect"]
+    }
+]
