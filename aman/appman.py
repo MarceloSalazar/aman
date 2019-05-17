@@ -155,8 +155,12 @@ class App_man:
                                             
         print "Temp location: " + self.apps[app_n]["local_dir"]
 
+        branch = self.apps[app_n]["branch"]
+
+        print("Branch: " + branch)
+
         command = "mbed import " + \
-                  self.apps[app_n]["app_url"] + " " + \
+                  self.apps[app_n]["app_url"] + "#" + branch + " " + \
                   dft_temp_dir + self.apps[app_n]["local_dir"]
 
         print("Command: " + command)
