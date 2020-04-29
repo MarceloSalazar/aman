@@ -29,10 +29,10 @@ class CLI(cmd.Cmd):
     def do_toolchain(self, toolchain):
         "Defines default toolchain. Usage: toolchain <toolchain>"
         if toolchain:
-            print "Toolchain: " + toolchain
+            print("Toolchain: " + toolchain)
             app.config_toolchain(toolchain)
         else:
-            print "Error at configuring toolchain"
+            print("Error at configuring toolchain")
     
     def do_compile(self, app_n):
         "Check if application compiles OK. Usage: compile <app_n>"
@@ -40,27 +40,27 @@ class CLI(cmd.Cmd):
         # TODO: select compiler, or compile for all
 
         if app_n == "":
-            print "Need application number"
+            print("Need application number")
         elif app_n == "all":
-            print "Compile all applications"
+            print("Compile all applications")
             n = app.get_napps()
             for i in range(0, n):
                 app.compile_app(int(i))
         elif not app_n.isdigit():
-            print "Not a number: " + app_n
+            print("Not a number: " + app_n)
         else:
-            print "Compiling application " + app_n
+            print("Compiling application " + app_n)
             app.compile_app(int(app_n))
 
     def do_run(self, app_n):
         "Check if applications runs OK on target. Usage: run <app_n>"
 
         if app_n == "":
-            print "Need application number"
+            print("Need application number")
         elif not app_n.isdigit():
-            print "Not a number: " + app_n
+            print("Not a number: " + app_n)
         else:
-            print "Runner application " + app_n
+            print("Runner application " + app_n)
             app.run_app(int(app_n))
 
         # TODO: select compiler, or run for all
@@ -70,7 +70,7 @@ class CLI(cmd.Cmd):
 
         if file == "":
             file = "applications.json"
-        print "Load file: " + str(file)
+        print("Load file: " + str(file))
         app.load_config(file)
 
     def do_save(self, file=None):
@@ -81,16 +81,16 @@ class CLI(cmd.Cmd):
         "Download and install application in current workspace. Usage: install <app_n>"
 
         if app_n == "":
-            print "Need application number"
+            print("Need application number")
         elif app_n == "all":
-            print "Install all applications"
+            print("Install all applications")
             n = app.get_napps()
             for i in range(0, n):
                 app.install_app(int(i))
         elif not app_n.isdigit():
-            print "Not a number: " + app_n
+            print("Not a number: " + app_n)
         else:
-            print "Installing application " + app_n
+            print("Installing application " + app_n)
             app.install_app(int(app_n))
 
     def do_update(self, params):
@@ -99,19 +99,19 @@ class CLI(cmd.Cmd):
         params = params.split(" ")
 
         if len(params) < 3:
-            print "Need params: app_n, library, sha/tag"
+            print("Need params: app_n, library, sha/tag")
             return
         elif params[0] == "":
-            print "Need application number"
+            print("Need application number")
             return
         elif params[1] == "":
-            print "Need library name"
+            print("Need library name")
             return
         elif params[2] == "":
-            print "Need sha/tag name"
+            print("Need sha/tag name")
             return
         elif params[0] == "all":
-            print "Update all applications"
+            print("Update all applications")
             n = app.get_napps()
             for i in range(0, n):
                 app.update_library(params[1], params[2], int(i))
@@ -123,14 +123,13 @@ class CLI(cmd.Cmd):
         "Install, compile, run an application. Usage: all <app_n>"
 
         if app_n == "":
-            print "Need application number"
+            print("Need application number")
         elif not app_n.isdigit():
-            print "Not a number: " + app_n
+            print("Not a number: " + app_n)
         else:
             app.install_app(int(app_n))
             app.compile_app(int(app_n))
             app.run_app(int(app_n))
-
 
     def do_status(self, line):
         "Print current status of applications and tests. Usage: status"
@@ -146,9 +145,8 @@ def main():
     # Load local configuration file
     load_dotenv('.env')
 
-    print "\n"
-    print "Application Manager"
-    print "==================="
+    print("\nApplication Manager")
+    print("===================")
 
     # Run Command Line interpreter
     CLI().cmdloop()

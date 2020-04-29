@@ -66,22 +66,22 @@ class App_man:
                 json_file.write(json_str)
                 json_file.close()
 
-        except Exception, e:
-            print "Error at saving " + config_file + " file, " + str(e)
-            print "Configuration not saved"
+        except Exception:
+            print("Error at saving " + config_file + " file, ")
+            print("Configuration not saved")
             return
 
     def remove_app(self, app_n):
 
         if not isinstance(app_n,int):
-            print "Not a number: " + str(app_n)
+            print("Not a number: " + str(app_n))
             return
 
         try:
             if "local_dir" in self.apps[app_n] and self.apps[app_n]["local_dir"] != False:
                 shutil.rmtree(dft_temp_dir + self.apps[app_n]["local_dir"])
-        except Exception, e:
-            print "Warning: 'local_dir' not found: " + str(self.apps[app_n]["local_dir"])
+        except Exception:
+            print("Warning: 'local_dir' not found: " + str(self.apps[app_n]["local_dir"]))
 
         self.apps[app_n]["local_dir"] = False
         self.apps[app_n]["status"] = "NEW"
@@ -92,18 +92,18 @@ class App_man:
     def load_config(self, config_file):
 
         if config_file == "":
-            print "Need to specify file, " + config_file
+            print("Need to specify file, " + config_file)
             return
 
         try:
             with open(config_file) as json_file:
                 self.apps = json.load(json_file)
-        except Exception, e:
-            print "Error at opening " + config_file + " file, " + str(e)
-            print "Configuration not loaded. Use 'load <config.json>"
+        except Exception:
+            print("Error at opening " + config_file + " file, ")
+            print("Configuration not loaded. Use 'load <config.json>")
             return
 
-        print "Configuration loaded from file " + config_file
+        print("Configuration loaded from file " + config_file)
 
         for i in range(len(self.apps)):
 
@@ -118,7 +118,7 @@ class App_man:
             
             if self.apps[i]["local_dir"]:
                 if os.path.isdir(dft_temp_dir + self.apps[i]["local_dir"]) == False:
-                    print "Application not found in folder. Removing."
+                    print("Application not found in folder. Removing.")
                     self.remove_app(i)
 
             if "compile" not in self.apps[i]:
@@ -133,17 +133,17 @@ class App_man:
 
         # TODO: check parameters
         if not isinstance(app_n,int):
-            print "Not a number (install): " + str(app_n)
+            print("Not a number (install): " + str(app_n))
             return
 
         if self.apps[app_n]["local_dir"]:
-            print "Application exists. Deleting and installing new one."
+            print("Application exists. Deleting and installing new one.")
 
             try:
                 shutil.rmtree(dft_temp_dir + self.apps[app_n]["local_dir"])
-                print "Done"
-            except Exception, e:
-                print "Error at deleting " + self.apps[app_n]["local_dir"] + " folder"
+                print("Done")
+            except Exception:
+                print("Error at deleting " + self.apps[app_n]["local_dir"] + " folder")
     
         # Get app name
         app_name = self.apps[app_n]["app_url"]
@@ -154,7 +154,7 @@ class App_man:
         self.apps[app_n]["local_dir"] = get_timestamp() + "_" + \
                                         self.apps[app_n]["vendor"] + "_" + app_name
                                             
-        print "Temp location: " + self.apps[app_n]["local_dir"]
+        print("Temp location: " + self.apps[app_n]["local_dir"])
 
         if "branch" in self.apps[app_n]:
             # TODO: test branch feature
@@ -171,8 +171,8 @@ class App_man:
 
         try:
             output = subprocess.check_call(command , shell=True, stderr=subprocess.STDOUT)
-        except Exception, e:
-            print "Error: " + str(e.output)
+        except Exception:
+            print("Error: " + str(e.output))
 
         self.apps[app_n]["status"] = "INSTALLED"
         self.apps[app_n]["credentials"] = ""
@@ -193,7 +193,7 @@ class App_man:
         table = PrettyTable(['#', 'Name', 'Targets', 'Status', 'Compile', 'Run'])
         table.align['Targets'] = 'l'
         
-        print "Toolchain: " + self.dft_toolchain
+        print("Toolchain: " + self.dft_toolchain)
 
         for i in range(len(self.apps)):
 
@@ -203,16 +203,16 @@ class App_man:
                            self.apps[i]["status"], \
                            ",\n".join(map(str, self.apps[i]["compile"])), \
                            ",\n".join(map(str, self.apps[i]["run"])) ])
-        print table
+        print(table)
 
 
     def update_app_library(self, library, sha_tag, app_n):
 
         if not isinstance(app_n,int):
-            print "Not a number (update): " + str(app_n)
+            print("Not a number (update): " + str(app_n))
             return
         if not self.apps[app_n]["local_dir"]:
-            print "Application not installed locally: " + str(app_n)
+            print("Application not installed locally: " + str(app_n))
             return
 
         # TODO: check parameters
@@ -224,14 +224,13 @@ class App_man:
         os.chdir(temp)
 
         command = "mbed update " + sha_tag
-        print "\n"
-        print("command: " + command)
+        print("\ncommand: " + command)
 
         try:
             output = subprocess.check_call(command , shell=True, stderr=subprocess.STDOUT)
-        except Exception, e:
-            output = str(e.output)
-        print output
+        except Exception:
+            output = "mbed update error\n"
+        print(output)
 
         # Return to top path
         os.chdir(top_path)
@@ -240,23 +239,23 @@ class App_man:
 
         # TODO: check parameters
 
-        print "Updating library " + library + " to " + sha_tag
+        print("Updating library " + library + " to " + sha_tag)
 
         if app_n == None:
-            print "Update: " + str(app_n)
+            print("Update: " + str(app_n))
             for i in range(len(self.apps)):
                 self.update_app_library(library, sha_tag, i)
         else:
-            print "Update: " + str(app_n)
+            print( "Update: " + str(app_n))
             self.update_app_library(library, sha_tag, app_n)
 
     def compile_app(self, app_n):
 
         if not isinstance(app_n,int):
-            print "Not a number (update): " + str(app_n)
+            print("Not a number (update): " + str(app_n))
             return
         if (not self.apps[app_n]["local_dir"]):
-            print "Application not installed locally: " + str(app_n)
+            print("Application not installed locally: " + str(app_n))
             return
 
         # Save current path        
@@ -282,10 +281,12 @@ class App_man:
                 output = subprocess.check_call(command , shell=True, stderr=subprocess.STDOUT)
                 compile_target.append(target + "_" + self.dft_toolchain + "_OK")
 
-            except Exception, e:
-                output = str(e.output)
+            except Exception:
+                output = "mbed compile error\n"
                 compile_target.append(target + "_" + self.dft_toolchain + "_Error")
 
+            print(output)
+        
         # Return to top path
         os.chdir(top_path)
 
@@ -295,7 +296,7 @@ class App_man:
     def run_app(self, app_n):
 
         if not isinstance(app_n,int):
-            print "Not a number (run): " + str(app_n)
+            print("Not a number (run): " + str(app_n))
             return
 
         # TODO:
@@ -306,14 +307,14 @@ class App_man:
         mbeds = mbed_lstools.create()
         muts = mbeds.list_mbeds(filter_function=None, unique_names=True, read_details_txt=False)
 
-        print "Detected devices:"
+        print("Detected devices:")
         detected_devices = dict()
         for mut in muts:
             detected_devices[mut["platform_name"]] = {"mount": mut["mount_point"], "serial":mut["serial_port"]}
-            print "   " + mut["platform_name"]
+            print("   " + mut["platform_name"])
             
         if detected_devices == dict():
-            print "   None"
+            print("   None")
          
         run_target=[]
         for target in self.apps[app_n]["targets"]:
@@ -321,10 +322,10 @@ class App_man:
 
             if target not in detected_devices:
                 run_target.append(target + "_Error")
-                print "Target " + target + " not detected"
+                print("Target " + target + " not detected")
                 continue
             else:
-                print "Target " + target + " detected"
+                print("Target " + target + " detected")
 
             binary_path = dft_temp_dir + self.apps[app_n]["local_dir"] + \
                           '/' + 'BUILD/' + \
@@ -347,8 +348,8 @@ class App_man:
             try:
                 output = subprocess.check_call(command , shell=True, stderr=subprocess.STDOUT)
                 run_target.append(target + "_" + self.dft_toolchain + "_OK")
-            except Exception, e:
-                output = str(e.output)
+            except Exception:
+                output = "htrun error\n"
                 run_target.append(target + "_" + self.dft_toolchain + "_Error")
 
         self.apps[app_n]["run"] = run_target
