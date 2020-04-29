@@ -21,36 +21,10 @@ import sys
 sys.path.insert(0, './aman')
 from appman import *
 
-PELION_CREDENTIALS_FILE = None
-API_KEY = None
-
 app = App_man()
 
 class CLI(cmd.Cmd):
     """Simple command processor example."""
-
-    def do_credentials(self, app_n):
-        "Install MCC credentials on an application. Usage: compile <app_n>"
-
-        # TODO: credentials file to be specified in .env local config
-
-        if app_n == "":
-            print "Need application number"
-            return
-        elif app_n == "all":
-            print "Install credentials on all applications"
-            n = app.get_napps()
-            for i in range(0, n):
-                app.install_app_credentials(PELION_CREDENTIALS_FILE, int(i))
-        elif not app_n.isdigit():
-            print "Not a number: " + app_n
-            return
-        else:
-            print "Installing credentials on app  " + app_n
-            if PELION_CREDENTIALS_FILE == None:
-                print "Developer credentials file not available"
-                return
-            app.install_app_credentials(PELION_CREDENTIALS_FILE, int(app_n))
 
     def do_toolchain(self, toolchain):
         "Defines default toolchain. Usage: toolchain <toolchain>"
@@ -136,9 +110,14 @@ class CLI(cmd.Cmd):
         elif params[2] == "":
             print "Need sha/tag name"
             return
-
-        print "Updating library " + params[0] + " to " + params[1] + " to sha/tag: " + params[2]
-        app.update_library(params[1], params[2], int(params[0]))
+        elif params[0] == "all":
+            print "Update all applications"
+            n = app.get_napps()
+            for i in range(0, n):
+                app.update_library(params[1], params[2], int(i))
+        else:
+            app.update_library(params[1], params[2], int(params[0]))
+               
 
     def do_all(self, app_n):
         "Install, compile, run an application. Usage: all <app_n>"
@@ -149,7 +128,6 @@ class CLI(cmd.Cmd):
             print "Not a number: " + app_n
         else:
             app.install_app(int(app_n))
-            app.install_app_credentials(PELION_CREDENTIALS_FILE, int(app_n))
             app.compile_app(int(app_n))
             app.run_app(int(app_n))
 
@@ -167,12 +145,6 @@ def main():
 
     # Load local configuration file
     load_dotenv('.env')
-
-    global PELION_CREDENTIALS_FILE
-    PELION_CREDENTIALS_FILE = os.getenv("PELION_CREDENTIALS_FILE")
-
-    global API_KEY
-    API_KEY = os.getenv("API_KEY")
 
     print "\n"
     print "Application Manager"

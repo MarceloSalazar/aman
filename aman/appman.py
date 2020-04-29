@@ -107,6 +107,7 @@ class App_man:
 
         for i in range(len(self.apps)):
 
+            self.apps[i]["name"].replace(" ", "_")
             self.apps[i]["vendor"].replace(" ", "_")
 
             if "status" not in self.apps[i]:
@@ -155,12 +156,15 @@ class App_man:
                                             
         print "Temp location: " + self.apps[app_n]["local_dir"]
 
-        branch = self.apps[app_n]["branch"]
-
-        print("Branch: " + branch)
-
-        command = "mbed import " + \
+        if "branch" in self.apps[app_n]:
+            # TODO: test branch feature
+            branch = self.apps[app_n]["branch"]
+            command = "mbed import " + \
                   self.apps[app_n]["app_url"] + "#" + branch + " " + \
+                  dft_temp_dir + self.apps[app_n]["local_dir"]
+        else:
+            command = "mbed import " + \
+                  self.apps[app_n]["app_url"] + " " + \
                   dft_temp_dir + self.apps[app_n]["local_dir"]
 
         print("Command: " + command)
@@ -186,10 +190,7 @@ class App_man:
 
     def print_status(self, app_n=None):
 
-        # TODO: print table
-        # Number | Vendor | Platform | Connectivity | Status
-
-        table = PrettyTable(['#', 'Targets', 'Network', 'Status', 'Compile', 'Run'])
+        table = PrettyTable(['#', 'Name', 'Targets', 'Status', 'Compile', 'Run'])
         table.align['Targets'] = 'l'
         
         print "Toolchain: " + self.dft_toolchain
@@ -197,8 +198,8 @@ class App_man:
         for i in range(len(self.apps)):
 
             table.add_row([i, \
+                           self.apps[i]["name"], \
                           ",\n".join(map(str, self.apps[i]["targets"])), \
-                           self.apps[i]["network"], \
                            self.apps[i]["status"], \
                            ",\n".join(map(str, self.apps[i]["compile"])), \
                            ",\n".join(map(str, self.apps[i]["run"])) ])
@@ -219,7 +220,7 @@ class App_man:
         top_path = os.getcwd()
 
         # Change to library folder before updating
-        temp = top_path + '/' + self.apps[app_n]["local_dir"] + '/' + library
+        temp = top_path + '/tmp/' + self.apps[app_n]["local_dir"] + '/' + library
         os.chdir(temp)
 
         command = "mbed update " + sha_tag
@@ -239,6 +240,8 @@ class App_man:
 
         # TODO: check parameters
 
+        print "Updating library " + library + " to " + sha_tag
+
         if app_n == None:
             print "Update: " + str(app_n)
             for i in range(len(self.apps)):
@@ -247,21 +250,6 @@ class App_man:
             print "Update: " + str(app_n)
             self.update_app_library(library, sha_tag, app_n)
 
-
-    def install_app_credentials(self, credentials_file, app_n):
-
-        if not isinstance(app_n,int):
-            print "Not a number (credentials): " + str(app_n)
-            return
-        if not self.apps[app_n]["status"] == "INSTALLED":
-            print "Application not installed: " + str(app_n)
-            return
-
-        shutil.copy2(credentials_file, dft_temp_dir + self.apps[app_n]["local_dir"])
-
-        self.apps[app_n]["credentials"] = "INSTALLED"
-        self.save_config()
-
     def compile_app(self, app_n):
 
         if not isinstance(app_n,int):
@@ -269,9 +257,6 @@ class App_man:
             return
         if (not self.apps[app_n]["local_dir"]):
             print "Application not installed locally: " + str(app_n)
-            return
-        if self.apps[app_n]["credentials"] != "INSTALLED":
-            print "Credentials not installed locally: " + str(app_n)
             return
 
         # Save current path        
@@ -282,9 +267,8 @@ class App_man:
         os.chdir(temp)
 
         # TODO: Needed config for specific apps, such WiFi credentials
-        compile_options = ""
 
-        # TODO: clean everything " -c "
+        compile_options = " -c"
 
         compile_target = []
         for target in self.apps[app_n]["targets"]:

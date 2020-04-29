@@ -1,58 +1,47 @@
 [
     {
-        "app_url"      : "http://os.mbed.com/teams/NXP/code/mbed-cloud-connect-example-ethernet/",
-        "version"      :  "1.3.0",
-        "targets"      : [ "K64F", "K66F"],
-        "network"      : "Ethernet",
-        "vendor"       : "NXP",
-        "features"     : ["Connect"]
-    },
-    {
-        "app_url"      : "http://os.mbed.com/teams/ST/code/example-Ethernet-mbed-Cloud-connect/",
-        "version"      :  "1.3.0",
-        "targets"      : [ "NUCLEO_F429ZI", "NUCLEO_F746ZG","NUCLEO_F767ZI"],
-        "network"      : "Ethernet",
+        "name"         : "IKS01A3",
+        "app_url"      : "https://os.mbed.com/teams/ST/code/HelloWorld_IKS01A3/",
+        "version"      :  "0.0.0",
+        "targets"      : ["NUCLEO_L476RG", "NUCLEO_F401RE", "NUCLEO_L053R8", "NUCLEO_L152RE"],
+        "network"      : "NA",
         "vendor"       : "ST",
-        "features"     : ["Connect"]
+        "features"     : ["NA"]
     },
     {
-        "app_url"      : "https://os.mbed.com/teams/ublox/code/example-ODINW2-mbed-Cloud-connect",
-        "version"      :  "1.3.0",
-        "targets"      : ["UBLOX_EVK_ODIN_W2"],
-        "network"      : "Wifi",
-        "vendor"       : "Ublox",
-        "features"     : ["Connect"]
-    },
-    {
-        "app_url"      : "https://os.mbed.com/teams/ST/code/example-DISCO_L475_IOT-mbed-Cloud-connec/",
-        "version"      :  "1.3.0",
-        "targets"      : ["DISCO_L475VG_IOT01A"],
-        "network"      : "Wifi",
+        "name"         : "S2868A2",
+        "app_url"      : "https://github.com/ARMmbed/mbed-os-example-mesh-minimal",
+        "version"      :  "0.0.0",
+        "targets"      : ["K64F", "K66F", "NUCLEO_F429ZI"],
+        "network"      : "NA",
         "vendor"       : "ST",
-        "features"     : ["Connect"]
+        "features"     : ["NA"]
     },
     {
-        "app_url"      : "https://os.mbed.com/teams/Realtek/code/example-RTL8195AM-mbed-cloud-connect/",
-        "version"      :  "1.3.3",
-        "targets"      : ["REALTEK_RTL8195AM"],
-        "network"      : "Wifi",
-        "vendor"       : "Realtek",
-        "features"     : ["Connect"]
+        "name"         : "53L1A1",
+        "app_url"      : "https://os.mbed.com/teams/ST/code/HelloWorld_53L1A1",
+        "version"      :  "0.0.0",
+        "targets"      : ["K82F", "NUCLEO_F446RE", "NUCLEO_L476RG"],
+        "network"      : "NA",
+        "vendor"       : "ST",
+        "features"     : ["NA"]
     },
     {
-        "app_url"      : "https://os.mbed.com/teams/Nuvoton/code/NuMaker-mbed-cloud-example-Ethernet/",
-        "version"      :  "1.3.3",
-        "targets"      : ["NUMAKER_PFM_NUC472","NUMAKER_PFM_M487"],
-        "network"      : "Ethernet",
-        "vendor"       : "Nuvoton",
-        "features"     : ["Connect"]
+        "name"         : "GNSS1A1",
+        "app_url"      : "https://os.mbed.com/teams/ST/code/TeseoLocation",
+        "version"      :  "0.0.0",
+        "targets"      : ["NUCLEO_F401RE"],
+        "network"      : "NA",
+        "vendor"       : "ST",
+        "features"     : ["NA"]
     },
     {
-        "app_url"      : "https://os.mbed.com/teams/Renesas/code/mbed-cloud-example_GR-LYCHEE/",
-        "version"      :  "1.3.3",
-        "targets"      : ["GR_LYCHEE"],
-        "network"      : "Wifi",
-        "vendor"       : "Renesas",
-        "features"     : ["Connect"]
-    }
+        "name"         : "IDB05A1",
+        "app_url"      : "https://os.mbed.com/components/X-NUCLEO-IDB05A1",
+        "version"      :  "0.0.0",
+        "targets"      : ["NUCLEO_F446RE", "NUCLEO_F401RE", "NUCLEO_F103RB"],
+        "network"      : "NA",
+        "vendor"       : "ST",
+        "features"     : ["NA"]
+    }   
 ]
