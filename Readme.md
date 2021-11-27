@@ -7,7 +7,7 @@ It uses an interactive CLI interface to perform multiple tasks on top of Mbed CL
 ### Installation
 
 ```
-git clone https://github.com/ARMmbed/aman
+git clone https://github.com/MarceloSalazar/aman
 cd aman
 ```
 
